@@ -1,0 +1,2 @@
+class Vroom < ApplicationRecord
+end
