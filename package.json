@@ -1,5 +1,7 @@
 {
   "name": "code_split",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
 }

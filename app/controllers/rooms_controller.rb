@@ -11,7 +11,7 @@ class RoomsController < ApplicationController
     room = current_user.rooms.build(room_params)
     if room.save
       flash[:success] = 'Chat room added!'
-      redirect_to rooms_path
+      redirect_to room_path(room.id)
     else
       flash[:errors] = room.errors.full_messages
       redirect_to :back
@@ -22,7 +22,7 @@ class RoomsController < ApplicationController
   end
 
   private
-  def room_parms
+  def room_params
     params.require(:room).permit(:title)
   end
 end

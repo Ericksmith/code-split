@@ -6,6 +6,7 @@
                 <tr>
                     <th>Title</th>
                     <th>Instructor</th>
+                    <th>Created at</th>
                     <th>Join</th>
                 </tr>
             </thead>
@@ -14,7 +15,8 @@
                 <% @rooms.each do |room| %>
                 <tr>
                     <td scope="row"><%= room.title %></td>
-                    <td><%= room.user.email %></td>
+                    <td><%= room.user.name %></td>
+                    <td><%= room.timestamp %></td>
                     <td><a name="join" id="join" class="btn btn-success" href="/rooms/join/<%= room.id %>" role="button">Join</a></td>
                 </tr>
                 <%end%>
