@@ -8,10 +8,12 @@ App.global_chat = App.cable.subscriptions.create({
     disconnected: function() {
 
     },
-    
+
     received(data) {
         return editor.append(data['code']);
     },
+
+    
 
     send_message: function(code, room_id) {
       return this.perform('send_message', {
@@ -20,3 +22,9 @@ App.global_chat = App.cable.subscriptions.create({
       });
     }
   });
+
+  $(document).ready(function (){
+      $("#editor").keyup(function(e){
+        console.log(e.keyCode)
+      });
+  })
