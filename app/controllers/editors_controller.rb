@@ -1,5 +1,5 @@
 class EditorsController < ApplicationController
-  def index
-    
+  def show
+
   end
 end

@@ -1,0 +1,37 @@
+
+<div class="row">
+    <div class="col-7">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Instructor</th>
+                    <th>Join</th>
+                </tr>
+            </thead>
+            <% if @rooms %>
+            <tbody>
+                <% @rooms.each do |room| %>
+                <tr>
+                    <td scope="row"><%= room.title %></td>
+                    <td><%= room.user.email %></td>
+                    <td><a name="join" id="join" class="btn btn-success" href="/rooms/join/<%= room.id %>" role="button">Join</a></td>
+                </tr>
+                <%end%>
+            </tbody>
+            <%end%>
+        </table>
+    </div>
+    <div class="col-5">
+        <h3>Create a new class room</h3>
+        <form action="/rooms" method="post">
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
+            <div class="form-group">
+              <label for="room[title]">Title</label>
+              <input type="text" class="form-control" name="room[title]" id="room[title]" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+
