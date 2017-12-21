@@ -1,8 +1,6 @@
 <div id="invitation">Invite your friends! Share the url of this page DOMAIN NAME HERE 
 </div>
-<div id="videobox">
-    
-</div>
+
 <script src="http://static.opentok.com/v2/js/opentok.min.js" type="text/javascript"></script>
     <script type="text/javascript">
     var apiKey = 46026622;
@@ -49,3 +47,9 @@
     }
   }
 </script>
+
+<% content_for :right_column do %>
+  <% render partial: 'shared/rindex' %>
+<% end %>
+
+ 

@@ -1,7 +1,7 @@
 class VroomsController < ApplicationController
   before_action :config_opentok,:except => [:index]
   def index
-    @rooms = Vroom.where(:public => true).order("created_at DESC")
+    @vrooms = Vroom.where(:public => true).order("created_at DESC")
     @new_room = Vroom.new
   end
 
@@ -24,6 +24,7 @@ class VroomsController < ApplicationController
   def party
     @room = Vroom.find(params[:id])
     @tok_token = @opentok.generate_token @room.sessionId
+    render layout: "two_column_two"
   end
   private
   def config_opentok

@@ -1,6 +1,9 @@
 class RoomsController < ApplicationController
   def index
     @rooms = Room.all
+    @vrooms = Vroom.where(:public => true).order("created_at DESC")
+    @new_room = Vroom.new
+    render layout: "two_column"
   end
 
   def show
