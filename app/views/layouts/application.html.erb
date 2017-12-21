@@ -17,6 +17,9 @@
 
   <body>
     <div class="container">
+      <% if current_user %>
+        <a name="" id="logout" class="btn btn-secondary float-right" data-method="DELETE" href="/users/sign_out" role="button">Logout</a>
+      <%end%>
       <%= yield %>
     </div>
   </body>
