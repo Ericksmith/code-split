@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  root to: "editors#index"
+
+#   root :to => 'vrooms#index'
+  resources :vrooms
+  match "/party/:id", :to => 'vrooms#party', :as => :party, :via => :get
+
+#   root to: "editors#index"
   
   resources :editors, only: [:show]
   resources :rooms, only: [:index, :create, :destory, :show]
+
 
   devise_for :users
   mount ActionCable.server => '/cable'

@@ -1,0 +1,28 @@
+<div id="newRoom">
+    <fieldset>
+        <legend>Start a new instruction room </legend>
+        <%= form_for(@new_room) do |f| %>
+        Room Name: <%= f.text_field :name %><br/><br/>
+        Public? <%= f.check_box :public %><br/><br/>
+        <!-- <%= f.submit %> -->
+        <input type="submit" name="commit" value="Create a Room" data-disable-with="Create a Room">
+        <% end %>
+    </fieldset>
+</div>
+<fieldset>
+    <legend>Existing instruction rooms</legend>
+    <table cellpadding="2" cellspacing="5">
+        <thead>
+            <th>Name</th>
+            <th>Started</th>
+        </thead>
+        <% @rooms.each do |room| %>
+        <tbody>
+            <td align="center" width="300px"><a href="/party/<%= room.id %>"><%=room.name %></a></td>
+            <td><%= room.created_at.strftime("%b %d, %Y") %></td>
+        </tbody>
+        <% end %>
+    </table>
+</fieldset>
+
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
