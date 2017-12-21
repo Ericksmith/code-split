@@ -6,8 +6,14 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+    2.3.3
+
+* rails
+    5
 
 * System dependencies
+    redis
+    
 
 * Configuration
 
