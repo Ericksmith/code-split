@@ -1,10 +1,5 @@
 $(document).ready(function (){
-
-    $("#editor").keyup(function(e){
-        App.global_chat.send_message
-    });
-
-    App.global_chat = App.cable.subscriptions.create({
+    App.room = App.cable.subscriptions.create({
         channel: "RoomsChannel",
         room_id: '1'
     }, {
@@ -16,20 +11,21 @@ $(document).ready(function (){
         },
 
         received(data) {
-            return editor.append(data['code']);
+            console.log('recieved');
+            alert(data)
+            return undefined
         },
 
-        
-
-        send_message: function(code, room_id) {
-        return this.perform('send_message', {
-            code: code,
-            room_id: room_id
+        update_code: function(data) {
+        return this.perform('update_code', {
+            code: data,
+            room_id: 1
         });
         }
     });
     $("#editor").keyup(function(e){
-        
+        let text = $('textarea#editor').val();
+        App.room.update_code(text)
     });
   });
 

@@ -8,13 +8,17 @@ class RoomsChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def updated_code(data)
-    room = Room.find(params['room_id'])
-    if room.update(code: data)
-      redirect_to :back
+  def test(data)
+    puts 'in test'
+  end
+
+  def update_code(data)
+    room = Room.find(data['room_id'])
+    if room.update(code: data['code'])
+      puts 'Updated code'
     else
       flash[:errors] = room.errors.full_messages
-      redirect_to :back
+      puts flash[:errors]
     end
   end
 end
