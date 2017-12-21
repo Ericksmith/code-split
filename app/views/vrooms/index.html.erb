@@ -1,25 +1,26 @@
 <div id="newRoom">
     <fieldset>
-        <legend>Start a new party room </legend>
+        <legend>Start a new instruction room </legend>
         <%= form_for(@new_room) do |f| %>
-        Party Name: <%= f.text_field :name %><br/><br/>
+        Room Name: <%= f.text_field :name %><br/><br/>
         Public? <%= f.check_box :public %><br/><br/>
-        <%= f.submit %>
+        <!-- <%= f.submit %> -->
+        <input type="submit" name="commit" value="Create a Room" data-disable-with="Create a Room">
         <% end %>
     </fieldset>
 </div>
 <fieldset>
-    <legend>Existing party rooms</legend>
+    <legend>Existing instruction rooms</legend>
     <table cellpadding="2" cellspacing="5">
-        <tr>
+        <thead>
             <th>Name</th>
             <th>Started</th>
-        </tr>
+        </thead>
         <% @rooms.each do |room| %>
-        <tr>
+        <tbody>
             <td align="center" width="300px"><a href="/party/<%= room.id %>"><%=room.name %></a></td>
-            <td><%= room.created_at %></td>
-        </tr>
+            <td><%= room.created_at.strftime("%b %d, %Y") %></td>
+        </tbody>
         <% end %>
     </table>
 </fieldset>

@@ -23,7 +23,7 @@ class VroomsController < ApplicationController
 
   def party
     @room = Vroom.find(params[:id])
-    @tok_token = @opentok.generate_token :session_id =>@room.sessionId
+    @tok_token = @opentok.generate_token @room.sessionId
   end
   private
   def config_opentok
