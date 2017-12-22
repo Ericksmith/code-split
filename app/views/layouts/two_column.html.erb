@@ -11,10 +11,29 @@
   </head>
 
   <body>
-    <div class="container">
-      <% if current_user %>
-        <a name="" id="logout" class="btn btn-secondary float-right" data-method="DELETE" href="/users/sign_out" role="button">Logout</a>
-      <%end%>
+
+      <div class="container">
+      <% if user_signed_in? %>
+      <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #002A43">
+        <a class="navbar-brand" href="/" id="title">Code/Split</a>
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= current_user.name %></a>
+              <div class="dropdown-menu" aria-labelledby="dropdownId">
+                <a class="dropdown-item" href="/users/edit">Edit Profile</a>
+                <a class="dropdown-item" href="/users/password/edit">Change Password</a>
+                <a class="dropdown-item"  href="/users/sign_out" data-method="DELETE">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- <a name="" id="logout" class="btn btn-secondary float-right" data-method="DELETE" href="/users/sign_out" role="button">Logout</a> -->
+    <%end%>
+
         <%= yield %>
       <div class="row">
         <div class="col-md-6">

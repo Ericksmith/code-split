@@ -1,7 +1,9 @@
 $(document).ready(function (){
     var saving = false
+    var lineCount = 1
     const roomNum = $('#roomId').val()
     const userName = $("#user_name").val()
+    const instructor = $("#instructor").val()
     App.room = App.cable.subscriptions.create({
         channel: "RoomsChannel",
         room: roomNum
@@ -15,14 +17,35 @@ $(document).ready(function (){
         }, 
 
         received(data) {
-            console.log('recieved');
-            console.log(data);
             if(data.action == "send_code"){
-                console.log('code');
                 $('#editor').val(data.code)
             } else if (data.action == "new_user") {
-                let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
-                radioButton.appendTo('#users')
+                if(userName == instructor ){
+                    let radioButtons = ""
+                    for(var i = 0; i < data.all_users.length; i++){
+                        radioButtons += '<input type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                    }
+                // let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
+                // radioButton.appendTo('#users')
+                    $('#users').html(radioButtons)
+            } else {
+                let radioButtons = ""
+                for(var i = 0; i < data.all_users.length; i++){
+                    radioButtons += '<input disabled type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                }
+                console.log(radioButtons);
+                // let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
+                // radioButton.appendTo('#users')
+                $('#users').html(radioButtons)
+            }
+            } else if (data.action == "change_user"){
+                if(userName == data.user){
+                    console.log('permission granted');
+                    $("#editor").removeAttr("disabled")
+                } else {
+                    console.log('Not allowed to type');
+                    $("#editor").prop('disabled', true);
+                }
             } else if (data.action == 'user_left'){
                 console.log('leaver');
             }
@@ -38,23 +61,45 @@ $(document).ready(function (){
         },
 
         update_code: function() {
-                console.log(chatObj, "thing"); 
-                console.log('Updating code');
-                let text = $('textarea#editor').val();
-                saving = false
-                return chatObj.perform('update_code', {
-                    code: text,
-                    room_id: 1
-                })
+            console.log('updating');
+            let text = $('textarea#editor').val();
+            console.log(text);
+            saving = false
+            return chatObj.perform('update_code', {
+                code: text,
+                room_id: roomNum
+            })
         },
+        change_user: function(data){
+            return this.perform('change_user', {
+                user: data
+            })
+        }
     });
     $("#editor").keyup(function(e){
         let text = $('textarea#editor').val();
-        // App.room.update_code(text)
         App.room.send_code(text)
+        // var lines = text.split(/\r|\r\n|\n/);
+        // var count = lines.length;
+        // console.log(count);
+        // console.log(lineCount);
+        // if(count != lineCount){
+        //     if(count > lineCount){
+        //         for(let i = lineCount; count > i; i++){
+        //             $('<p class="monospaced">' + i +'</p>').appendTo("#lineCount")
+        //     }
+        //         lineCount = count
+        //     } else {
+        //         for(let x = lineCount; count < x; x--){
+        //             $("#lineCount p").last().remove()
+        //         }
+        //         lineCount = count
+        //     }
+        // }
     });
-    $('input:radio[name=typer]').on("click", function(){
-        console.log('clicked');
-    });
+    $('#users').on("click", 'input:radio', (function(){
+        console.log('click');
+        App.room.change_user($(this).attr('value'))
+    }));
   });
 

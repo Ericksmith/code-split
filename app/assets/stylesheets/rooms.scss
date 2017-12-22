@@ -1,3 +1,21 @@
 // Place all the styles related to the Rooms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#editor{
+    padding:10px;
+    border-radius: 15px;
+    border: 4px solid #500D05;
+    background-color: rgb(105, 105, 105);
+    color: rgb(238, 238, 238);
+    width: 100%;
+    height: 400px;
+}
+
+// .monospaced {
+//     line-height: 0.5;
+//     position: relative;
+// }
+
+// #lineCount {
+//     position: relative;
+// }

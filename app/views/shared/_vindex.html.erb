@@ -1,12 +1,13 @@
 
 <div id="newRoom">
     <fieldset>
-      <div class="col-5">
+      <div class="col-12">
         <legend>Create a Video Instruction Room </legend>
         <%= form_for(@new_room) do |f| %>
         <div class="form-group">
-          Room Name: <label><%= f.text_field :name %></label> 
-          Public? <label><%= f.check_box :public %></label> 
+            
+          <p>Room Name: <label><%= f.text_field :name %></label> </p>
+          <p> Public? <label><%= f.check_box :public %></label> </p>
                 <input type="submit" name="commit" class="btn btn-primary" value="Create a VIR" data-disable-with="Create a VIR">
         </div>
         <% end %>
@@ -23,7 +24,7 @@
         </thead>
         <% @vrooms.each do |room| %>
         <tbody>
-            <td><a href="/party/<%= room.id %>"><%=room.name %></a></td>
+            <td width="300px"><a href="/party/<%= room.id %>"><%=room.name %></a></td>
             <td><%= room.created_at.strftime("%b %d, %Y") %></td>
         </tbody>
         <% end %>

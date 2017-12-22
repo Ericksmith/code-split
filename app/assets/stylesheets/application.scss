@@ -15,8 +15,16 @@
  */
  @import "bootstrap";
 
+
+ #title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    margin-right: 55%;
+}
+
  body{
     background-image: url('gb.jpg');
     background-size: 1400px 900px;
     color: white;
  }
+
