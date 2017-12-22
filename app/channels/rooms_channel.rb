@@ -6,6 +6,7 @@ class RoomsChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+    puts "user unsubscribed*************************"
   end
 
   def update_code(data)
@@ -19,6 +20,16 @@ class RoomsChannel < ApplicationCable::Channel
   end
 
   def send_code(data)
-    ActionCable.server.broadcast("chat_rooms_1_channel", data)
+    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+  end
+
+  def new_user(data)
+    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+  end
+
+  def user_left(data)
+    puts '********************************'
+    puts "user leaving"
+    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
   end
 end

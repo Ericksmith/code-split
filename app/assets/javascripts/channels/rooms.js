@@ -1,15 +1,17 @@
 $(document).ready(function (){
     var saving = false
-    // const roomNum = 
+    const roomNum = $('#roomId').val()
+    const userName = $("#user_name").val()
     App.room = App.cable.subscriptions.create({
         channel: "RoomsChannel",
-        room: "1"
+        room: roomNum
     },   {
         connected: function() {
-
+            return this.perform('new_user', {name: userName})
         },
         disconnected: function() {
-
+            console.log('discon');
+            return this.perform('user_left', {name: userName})
         }, 
             chat: function(){
                 return this
@@ -17,8 +19,16 @@ $(document).ready(function (){
 
         received(data) {
             console.log('recieved');
-            $('#editor').val(data.code)
-            // update_code
+            console.log(data);
+            if(data.action == "send_code"){
+                console.log('code');
+                $('#editor').val(data.code)
+            } else if (data.action == "new_user") {
+                let radioButton = $('<input type="radio" name="typer" value="${data.name}">')
+                radioButton.appendTo('#users')
+            } else if (data.action == 'user_left'){
+                console.log('leaver');
+            }
         },
 
         send_code: function(text) {

@@ -1,4 +1,8 @@
 <h1><%= @room.title %></h1>
 <h3>Created by <%= @room.user.name %></h3>
-
+<div id="users">
+    
+</div>
 <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
+<input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
+<input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
