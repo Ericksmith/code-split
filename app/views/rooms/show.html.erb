@@ -3,7 +3,6 @@
         <h1><%= @room.title %></h1>
         <p>Created by <%= @room.user.name %></p>
         <div id="users">
-            
         </div>
         <div id="lineCount">
 
@@ -11,6 +10,7 @@
         <textarea name="editor" id="editor" cols="30" rows="10"><%= @room.code %></textarea>
         <input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
+        <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
     </div>
     <div class="col-4">
         <h3>Chat</h3>

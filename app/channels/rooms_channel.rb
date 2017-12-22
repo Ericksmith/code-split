@@ -1,6 +1,7 @@
 class RoomsChannel < ApplicationCable::Channel
   def subscribed
     stream_from "chat_rooms_#{params['room']}_channel"
+    room = Room.find(params[:room])
   end
 
   def unsubscribed
@@ -29,6 +30,10 @@ class RoomsChannel < ApplicationCable::Channel
   def user_left(data)
     puts '********************************'
     puts "user leaving"
+    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+  end
+
+  def change_user(data)
     ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
   end
 end
