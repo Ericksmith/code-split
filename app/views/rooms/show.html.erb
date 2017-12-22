@@ -1,3 +1,11 @@
+<% content_for :title do %>
+  <%= @room.title %>
+<% end %>
+<br>
+<br>
+<% content_for :left_column do %>
+
+
 <h1><%= @room.title %></h1>
 <h3>Created by <%= @room.user.name %></h3>
 <div id="users">
@@ -6,3 +14,8 @@
 <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
 <input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
 <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
+<% end %>
+
+<% content_for :right_column do %>
+  <% render partial: "partials/vir_create", :locals => { :new_room => @new_room, :vrooms => @vrooms}%>
+<% end %>

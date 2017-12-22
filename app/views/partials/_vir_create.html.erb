@@ -1,4 +1,3 @@
-
 <div id="newRoom">
     <fieldset>
       <div class="col-5">
@@ -13,23 +12,3 @@
       </div>
     </fieldset>
 </div>
-<br>
-<fieldset>
-    <legend>Existing VIRs</legend>
-    <table class="table table-striped" cellpadding="2" cellspacing="5">
-        <thead>
-            <th>Name</th>
-            <th>Started</th>
-        </thead>
-        <% @vrooms.each do |room| %>
-        <tbody>
-            <td><a href="/party/<%= room.id %>"><%=room.name %></a></td>
-            <td><%= room.created_at.strftime("%b %d, %Y") %></td>
-        </tbody>
-        <% end %>
-    </table>
-</fieldset>
-
-
-
-

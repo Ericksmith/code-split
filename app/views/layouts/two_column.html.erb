@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CodeSplit</title>
+    <title>Dashboard</title>
     <%= csrf_meta_tags %>
     
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -12,6 +12,9 @@
 
   <body>
     <div class="container">
+      <% if current_user %>
+        <a name="" id="logout" class="btn btn-secondary float-right" data-method="DELETE" href="/users/sign_out" role="button">Logout</a>
+      <%end%>
         <%= yield %>
       <div class="row">
         <div class="col-md-6">
