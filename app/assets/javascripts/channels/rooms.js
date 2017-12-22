@@ -21,11 +21,22 @@ $(document).ready(function (){
                 $('#editor').val(data.code)
             } else if (data.action == "new_user") {
                 if(userName == instructor ){
-                let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
-                radioButton.appendTo('#users')
+                    let radioButtons = ""
+                    for(var i = 0; i < data.all_users.length; i++){
+                        radioButtons += '<input type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                    }
+                // let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
+                // radioButton.appendTo('#users')
+                    $('#users').html(radioButtons)
             } else {
-                let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
-                radioButton.appendTo('#users')
+                let radioButtons = ""
+                for(var i = 0; i < data.all_users.length; i++){
+                    radioButtons += '<input disabled type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                }
+                console.log(radioButtons);
+                // let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
+                // radioButton.appendTo('#users')
+                $('#users').html(radioButtons)
             }
             } else if (data.action == "change_user"){
                 if(userName == data.user){
@@ -87,6 +98,7 @@ $(document).ready(function (){
         // }
     });
     $('#users').on("click", 'input:radio', (function(){
+        console.log('click');
         App.room.change_user($(this).attr('value'))
     }));
   });
