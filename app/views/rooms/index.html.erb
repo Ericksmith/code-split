@@ -1,11 +1,8 @@
-<div style="text-align: center">
-  <h1>Welcome, <%= current_user.name %></h1>
-</div>
-  
 <br>
 
 <% content_for :left_column do %>
-    <div class="col-5">
+<div class="row">
+    <div class="col-11">
       <legend>Create a Virtual WhiteBoard</legend>
       <form action="/rooms" method="post">
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
@@ -15,11 +12,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Create a VWB</button>
       </form>
-    </div>
-    <br>
-    <div class="row">
       <legend>Existing VWBs</legend>
-        <div class="col-7">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -36,7 +29,7 @@
                         <td scope="row"><%= room.title %></td>
                         <td><%= room.user.name %></td>
                         <td><%= room.created_at.strftime("%b %d, %Y") %></td>
-                        <td><a name="join" id="join" class="btn btn-success" href="/rooms/join/<%= room.id %>" role="button">Join</a></td>
+                        <td><a name="join" id="join" class="btn btn-success" href="/rooms/<%= room.id %>" role="button">Join</a></td>
                     </tr>
                     <%end%>
                 </tbody>

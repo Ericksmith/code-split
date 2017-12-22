@@ -1,5 +1,6 @@
 $(document).ready(function (){
     var saving = false
+    var lineCount = 1
     const roomNum = $('#roomId').val()
     const userName = $("#user_name").val()
     App.room = App.cable.subscriptions.create({
@@ -7,7 +8,7 @@ $(document).ready(function (){
         room: roomNum
     },   {
         connected: function() {
-            return this.perform('new_user', {name: userName})
+            // return this.perform('new_user', {name: userName})
         },
         disconnected: function() {
             console.log('discon');
@@ -15,10 +16,7 @@ $(document).ready(function (){
         }, 
 
         received(data) {
-            console.log('recieved');
-            console.log(data);
             if(data.action == "send_code"){
-                console.log('code');
                 $('#editor').val(data.code)
             } else if (data.action == "new_user") {
                 let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
@@ -38,23 +36,36 @@ $(document).ready(function (){
         },
 
         update_code: function() {
-                console.log(chatObj, "thing"); 
-                console.log('Updating code');
+                console.log('updating');
                 let text = $('textarea#editor').val();
+                console.log(text);
                 saving = false
                 return chatObj.perform('update_code', {
                     code: text,
-                    room_id: 1
+                    room_id: roomNum
                 })
         },
     });
     $("#editor").keyup(function(e){
         let text = $('textarea#editor').val();
-        // App.room.update_code(text)
         App.room.send_code(text)
-    });
-    $('input:radio[name=typer]').on("click", function(){
-        console.log('clicked');
+        // var lines = text.split(/\r|\r\n|\n/);
+        // var count = lines.length;
+        // console.log(count);
+        // console.log(lineCount);
+        // if(count != lineCount){
+        //     if(count > lineCount){
+        //         for(let i = lineCount; count > i; i++){
+        //             $('<p class="monospaced">' + i +'</p>').appendTo("#lineCount")
+        //     }
+        //         lineCount = count
+        //     } else {
+        //         for(let x = lineCount; count < x; x--){
+        //             $("#lineCount p").last().remove()
+        //         }
+        //         lineCount = count
+        //     }
+        // }
     });
   });
 
