@@ -1,39 +1,54 @@
-
-<div class="row">
-    <div class="col-7">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Instructor</th>
-                    <th>Created at</th>
-                    <th>Join</th>
-                </tr>
-            </thead>
-            <% if @rooms %>
-            <tbody>
-                <% @rooms.each do |room| %>
-                <tr>
-                    <td scope="row"><%= room.title %></td>
-                    <td><%= room.user.name %></td>
-                    <td><%= room.timestamp %></td>
-                    <td><a name="join" id="join" class="btn btn-success" href="/rooms/join/<%= room.id %>" role="button">Join</a></td>
-                </tr>
-                <%end%>
-            </tbody>
-            <%end%>
-        </table>
-    </div>
-    <div class="col-5">
-        <h3>Create a new class room</h3>
-        <form action="/rooms" method="post">
-            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
-            <div class="form-group">
-              <label for="room[title]">Title</label>
-              <input type="text" class="form-control" name="room[title]" id="room[title]" placeholder="">
-            </div>
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
-    </div>
+<div style="text-align: center">
+  <h1>Welcome, <%= current_user.name %></h1>
 </div>
+  
+<br>
 
+<% content_for :left_column do %>
+    <div class="col-5">
+      <legend>Create a Virtual WhiteBoard</legend>
+      <form action="/rooms" method="post">
+        <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
+        <div class="form-group">
+          <label for="room[title]">Title</label>
+          <input type="text" class="form-control" name="room[title]" id="room[title]" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-primary">Create a VWB</button>
+      </form>
+    </div>
+    <br>
+    <div class="row">
+      <legend>Existing VWBs</legend>
+        <div class="col-7">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Instructor</th>
+                        <th>Started</th>
+                        <th>Join</th>
+                    </tr>
+                </thead>
+                <% if @rooms %>
+                <tbody>
+                    <% @rooms.each do |room| %>
+                    <tr>
+                        <td scope="row"><%= room.title %></td>
+                        <td><%= room.user.name %></td>
+                        <td><%= room.created_at.strftime("%b %d, %Y") %></td>
+                        <td><a name="join" id="join" class="btn btn-success" href="/rooms/join/<%= room.id %>" role="button">Join</a></td>
+                    </tr>
+                    <%end%>
+                </tbody>
+                <%end%>
+            </table>
+        </div>
+  </div>    
+<% end %>
+<% content_for :right_column do %>
+  <% render partial: 'shared/vindex', :locals => { :new_room => @new_room, :vrooms => @vrooms} %>
+<% end %>
+
+<% content_for :bottom do %>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<% end %>

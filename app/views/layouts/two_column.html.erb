@@ -12,7 +12,19 @@
 
   <body>
     <div class="container">
-      <%= yield %>
+        <%= yield %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= yield :left_column %>
+        </div>
+        <div class="col-md-6">
+            <%= yield :right_column %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <%= yield :bottom %>
+      </div>
     </div>
+ 
   </body>
 </html>

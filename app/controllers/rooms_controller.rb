@@ -1,6 +1,9 @@
 class RoomsController < ApplicationController
   def index
     @rooms = Room.all
+    @vrooms = Vroom.where(:public => true).order("created_at DESC")
+    @new_room = Vroom.new
+    render layout: "two_column"
   end
 
   def show
@@ -10,8 +13,13 @@ class RoomsController < ApplicationController
   def create
     room = current_user.rooms.build(room_params)
     if room.save
+      puts room.id
       flash[:success] = 'Chat room added!'
-      redirect_to room_path(room.id)
+      if params[:special]
+        render partial: "partials/rindex", locals: { room: room }
+      else
+        redirect_to room_path(room.id)
+      end
     else
       flash[:errors] = room.errors.full_messages
       redirect_to :back

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
-#   root :to => 'vrooms#index'
+  root :to => 'rooms#index'
+  
   resources :vrooms
   match "/party/:id", :to => 'vrooms#party', :as => :party, :via => :get
 
