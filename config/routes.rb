@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :vrooms
   match "/party/:id", :to => 'vrooms#party', :as => :party, :via => :get
 
-#   root to: "editors#index"
+  root to: "rooms#index"
   
   resources :editors, only: [:show]
   resources :rooms, only: [:index, :create, :destory, :show]
