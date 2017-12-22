@@ -13,9 +13,6 @@ $(document).ready(function (){
             console.log('discon');
             return this.perform('user_left', {name: userName})
         }, 
-            chat: function(){
-                return this
-            },
 
         received(data) {
             console.log('recieved');
@@ -24,7 +21,7 @@ $(document).ready(function (){
                 console.log('code');
                 $('#editor').val(data.code)
             } else if (data.action == "new_user") {
-                let radioButton = $('<input type="radio" name="typer" value="${data.name}">')
+                let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
                 radioButton.appendTo('#users')
             } else if (data.action == 'user_left'){
                 console.log('leaver');
@@ -55,6 +52,9 @@ $(document).ready(function (){
         let text = $('textarea#editor').val();
         // App.room.update_code(text)
         App.room.send_code(text)
+    });
+    $('input:radio[name=typer]').on("click", function(){
+        console.log('clicked');
     });
   });
 
