@@ -1,4 +1,10 @@
-<div class="row">
+
+<% content_for :title do %>
+  <%= @room.title %>
+<% end %>
+<br>
+<br>
+<% content_for :left_column do %>
     <div class='col-7'>
         <h1><%= @room.title %></h1>
         <p>Created by <%= @room.user.name %></p>
@@ -15,4 +21,8 @@
     <div class="col-4">
         <h3>Chat</h3>
     </div>
-</div>
+<% end %>
+
+<% content_for :right_column do %>
+  <% render partial: "partials/vir_create", :locals => { :new_room => @new_room, :vrooms => @vrooms}%>
+<% end %>
