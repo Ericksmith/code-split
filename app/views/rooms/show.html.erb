@@ -121,7 +121,15 @@
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
     </div>
-    <div class="col-4">
+    <div class="col-4 pt-5">
         <h3>Chat</h3>
+        <div class="chatBox">
+        </div>
+        <form action="">
+            <div class="form-group">
+              <input type="text" class="form-control" name="chatMessage" id="chatMessage" aria-describedby="helpId" placeholder="">
+              <button type="submit" class="btn btn-secondary ">Send</button>
+            </div>
+        </form>
     </div>
 </div>
