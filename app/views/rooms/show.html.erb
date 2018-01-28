@@ -17,7 +17,6 @@
                         console.log('discon', userName);
                         return this.perform('user_left', {name: userName})
                     }, 
-            
                     received(data) {
                         if(data.action == "send_code"){
                             $('#editor').val(data.code)
@@ -52,7 +51,7 @@
                             console.log('leaver');
                         } else if (data.action == "chat_message"){
                             let msg = "<p class='chatMessage'>" + data.user + ": " + data.msg + "</p>"
-                            $(".chatBox").append(msg)
+                            $(".chatBox").prepend(msg)
                         }
                     },
             
