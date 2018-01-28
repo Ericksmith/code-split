@@ -50,6 +50,9 @@
                             }
                         } else if (data.action == 'user_left'){
                             console.log('leaver');
+                        } else if (data.action == "chat_message"){
+                            let msg = "<p class='chatMessage'>" + data.user + ": " + data.msg + "</p>"
+                            $(".chatBox").append(msg)
                         }
                     },
             
@@ -76,6 +79,12 @@
                         return this.perform('change_user', {
                             user: data
                         })
+                    },
+                    send_message: function(text){
+                        return this.perform("chat_message", {
+                            msg: text,
+                            user: userName
+                        })
                     }
                 });
                 $("#editor").keyup(function(e){
@@ -100,9 +109,15 @@
                     // }
                 });
                 $('#users').on("click", 'input:radio', (function(){
-                    console.log('click');
                     App.room.change_user($(this).attr('value'))
                 }));
+                $("#chatMessage").keypress(function(e){
+                    if(e.which == 13){
+                        e.preventDefault();
+                        App.room.send_message($("#chatMessage").val())
+                        $("#chatMessage").val('')
+                    }
+                });
               });
     </script>
 
@@ -128,7 +143,6 @@
         <form action="">
             <div class="form-group">
               <input type="text" class="form-control" name="chatMessage" id="chatMessage" aria-describedby="helpId" placeholder="">
-              <button type="submit" class="btn btn-secondary ">Send</button>
             </div>
         </form>
     </div>

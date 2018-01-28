@@ -1,6 +1,6 @@
 <br>
 <div class="row">
-    <div class="col-11">
+    <div class="col-4">
       <legend>Create a room</legend>
       <form action="/rooms" method="post">
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
@@ -8,9 +8,11 @@
           <label for="room[title]">Title</label>
           <input type="text" class="form-control" name="room[title]" id="room[title]" placeholder="">
         </div>
-        <button type="submit" class="btn btn-primary">Create a VWB</button>
+        <button type="submit" class="btn btn-primary">Create a room</button>
       </form>
-      <legend>Existing VWBs</legend>
+      </div>
+      <div class="col-8">
+      <legend>Existing rooms</legend>
             <table class="table table-striped">
                 <thead>
                     <tr>

@@ -51,4 +51,8 @@ class RoomsChannel < ApplicationCable::Channel
   def change_user(data)
     ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
   end
+
+  def chat_message(data)
+    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+  end
 end
