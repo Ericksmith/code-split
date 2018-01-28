@@ -6,9 +6,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.joins(:user).find(params[:id])
-    @vrooms = Vroom.where(:public => true).order("created_at DESC")
-    @new_room = Vroom.new
-    render layout: "two_column_two"
+    render :show
   end
 
   def create
