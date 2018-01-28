@@ -1,9 +1,7 @@
 <br>
-
-<% content_for :left_column do %>
 <div class="row">
     <div class="col-11">
-      <legend>Create a Virtual WhiteBoard</legend>
+      <legend>Create a room</legend>
       <form action="/rooms" method="post">
         <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token =%>'>
         <div class="form-group">
@@ -37,11 +35,3 @@
             </table>
         </div>
   </div>    
-<% end %>
-<% content_for :right_column do %>
-  <% render partial: 'shared/vindex', :locals => { :new_room => @new_room, :vrooms => @vrooms} %>
-<% end %>
-
-<% content_for :bottom do %>
-  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-<% end %>
