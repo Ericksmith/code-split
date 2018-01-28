@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
 
   root :to => 'rooms#index'
-  
-  resources :vrooms
-  match "/party/:id", :to => 'vrooms#party', :as => :party, :via => :get
-  
-  resources :editors, only: [:show]
+  root to: "rooms#index"
   resources :rooms, only: [:index, :create, :destory, :show]
 
 

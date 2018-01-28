@@ -19,3 +19,17 @@
 // #lineCount {
 //     position: relative;
 // }
+
+.chatBox{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 2px solid black;
+    width: 100%;
+    height: 400px;
+    padding: 5px;
+}
+
+.chatMessage{
+    margin: 0px;
+    vertical-align: bottom;
+}
