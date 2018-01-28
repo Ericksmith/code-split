@@ -1,0 +1,14 @@
+<div id="newRoom">
+    <fieldset>
+      <div class="col-12">
+        <legend>Create a Video Instruction Room </legend>
+        <%= form_for(@new_room) do |f| %>
+        <div class="form-group">
+          Room Name: <label><%= f.text_field :name %></label> 
+          Public? <label><%= f.check_box :public %></label> 
+                <input type="submit" name="commit" class="btn btn-primary" value="Create a VIR" data-disable-with="Create a VIR">
+        </div>
+        <% end %>
+      </div>
+    </fieldset>
+</div>

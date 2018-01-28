@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CodeSplit</title>
+    <title><%= yield :title %></title>
     <%= csrf_meta_tags %>
     
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <div class="container addedColor">
+    <div class="container background1">
       <% if user_signed_in? %>
         <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #002A43">
           <a class="navbar-brand" href="/" id="title">Code/Split</a>
