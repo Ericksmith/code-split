@@ -6,8 +6,11 @@ class RoomsChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+    puts "USer left!!!"
+    puts "******************************"
     member = Member.find_by(user_id: current_user.id)
     if member.destroy
+      puts "member deleted"
     else
       flash[:errors] = memeber.errors.full_messages
     end
