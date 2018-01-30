@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root :to => 'rooms#index'
   root to: "rooms#index"
-  resources :rooms, only: [:index, :create, :destory, :show]
+  resources :rooms, only: [:index, :create, :destory, :show, :destroy]
 
 
   devise_for :users

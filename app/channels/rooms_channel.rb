@@ -9,8 +9,17 @@ class RoomsChannel < ApplicationCable::Channel
     puts "USer left!!!"
     puts "******************************"
     member = Member.find_by(user_id: current_user.id)
+    room = member.room_id
     if member.destroy
-      puts "member deleted"
+      # method to destroy empty rooms, but it removes room on refresh
+      # unless Member.find_by(room_id: room)
+      #   room_to_destroy = Room.find(room)
+      #   if room_to_destroy.destroy
+      #     puts "room destroyed"
+      #   else
+      #     flash[:errors] = room_to_destroy.errors.full_messages
+      #   end
+      # end
     else
       flash[:errors] = memeber.errors.full_messages
     end

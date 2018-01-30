@@ -22,6 +22,13 @@ class RoomsController < ApplicationController
   end
 
   def destroy
+    room = Room.find(params[:id])
+    if room.destroy
+      puts "room deleted"
+      redirect_to rooms_path
+    else
+      flash[:errors] = room.errors.full_messages
+    end
   end
 
   private

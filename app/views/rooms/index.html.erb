@@ -30,7 +30,10 @@
                         <td scope="row"><%= room.title %></td>
                         <td><%= room.user.name %></td>
                         <td><%= room.created_at.strftime("%b %d, %Y") %></td>
-                        <td><a name="join" id="join" class="btn btn-success" href="/rooms/<%= room.id %>" role="button">Join</a></td>
+                        <td>
+                            <a name="join" id="join" class="btn btn-success" href="/rooms/<%= room.id %>" role="button">Join</a>
+                            <a name="delete" id="delete" class="btn btn-danger" data-method="delete" href="/rooms/<%= room.id %>" role="button">Delete</a>
+                        </td>
                     </tr>
                     <%end%>
                 </tbody>
