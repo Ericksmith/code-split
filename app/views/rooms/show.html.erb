@@ -24,15 +24,15 @@
                             if(userName == instructor ){
                                 let radioButtons = ""
                                 for(var i = 0; i < data.all_users.length; i++){
-                                    radioButtons += '<p class="blocked person"><input type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
+                                    radioButtons += '<p class="blocked person" id="'+ data.all_users[i] +'"><input type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
                                 }
                             // let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
                             // radioButton.appendTo('#users')
-                                $('#users').html(radioButtons)
+                                $('.users').html(radioButtons)
                         } else {
                             let radioButtons = ""
                             for(var i = 0; i < data.all_users.length; i++){
-                                radioButtons += '<p class="blocked person"><input disabled type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
+                                radioButtons += '<p class="blocked person" id="'+ data.all_users[i] +'"><input disabled type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
                             }
                             console.log(radioButtons);
                             // let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
@@ -42,6 +42,7 @@
                         } else if (data.action == "change_user"){
                             if(userName == data.user){
                                 console.log('permission granted');
+                                $("#" + data.user + ".blocked").toggleClass("active")
                                 $("#editor").removeAttr("disabled")
                             } else {
                                 console.log('Not allowed to type');
@@ -147,7 +148,6 @@
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
     </div>
     <div class="col-2 users">
-        <p>Users</p>
     </div>
     <div class="col-4">
         <div class="chatBox">
