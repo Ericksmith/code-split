@@ -24,7 +24,7 @@
                             if(userName == instructor ){
                                 let radioButtons = ""
                                 for(var i = 0; i < data.all_users.length; i++){
-                                    radioButtons += '<input type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                                    radioButtons += '<p class="blocked person"><input type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
                                 }
                             // let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
                             // radioButton.appendTo('#users')
@@ -32,12 +32,12 @@
                         } else {
                             let radioButtons = ""
                             for(var i = 0; i < data.all_users.length; i++){
-                                radioButtons += '<input disabled type="radio" class="person" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label>'
+                                radioButtons += '<p class="blocked person"><input disabled type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
                             }
                             console.log(radioButtons);
                             // let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
                             // radioButton.appendTo('#users')
-                            $('#users').html(radioButtons)
+                            $('.users').html(radioButtons)
                         }
                         } else if (data.action == "change_user"){
                             if(userName == data.user){
@@ -113,30 +113,43 @@
                 $("#chatMessage").keypress(function(e){
                     if(e.which == 13){
                         e.preventDefault();
-                        App.room.send_message($("#chatMessage").val())
-                        $("#chatMessage").val('')
+                        let msg = $("#chatMessage").val();
+                        if(msg.length > 0){
+                            App.room.send_message(msg)
+                            $("#chatMessage").val('')
+                        }
                     }
                 });
               });
     </script>
 
-
 <div class="row">
-    <div class='col-7'>
+    <div class="col-6">
         <h1><%= @room.title %></h1>
         <p>Created by <%= @room.user.name %></p>
+    </div>
+    <div class="col-2">
+        <h4 class="mt-5">Users</h4>
+    </div>
+    <div class="col-4">
+        <h3 class="mt-5">Chat</h3>
+    </div>
+</div>
+<div class="row">
+    <div class='col-6'>
         <div id="users">
         </div>
         <div id="lineCount">
-
         </div>
         <textarea name="editor" id="editor" cols="30" rows="10"><%= @room.code %></textarea>
         <input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
     </div>
-    <div class="col-4 pt-5">
-        <h3>Chat</h3>
+    <div class="col-2 users">
+        <p>Users</p>
+    </div>
+    <div class="col-4">
         <div class="chatBox">
         </div>
         <form action="">
