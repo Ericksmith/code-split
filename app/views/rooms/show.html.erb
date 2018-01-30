@@ -108,7 +108,7 @@
                     //     }
                     // }
                 });
-                $('#users').on("click", 'input:radio', (function(){
+                $('.users').on("click", 'input:radio', (function(){
                     App.room.change_user($(this).attr('value'))
                 }));
                 $("#chatMessage").keypress(function(e){
@@ -123,7 +123,6 @@
                 });
               });
     </script>
-
 <div class="row">
     <div class="col-6">
         <h1><%= @room.title %></h1>
