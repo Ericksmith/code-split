@@ -15,4 +15,7 @@
 //= require turbolinks
 //= require cable
 //= require_tree .
+//= require codemirror/lib/codemirror.js
+//= require codemirror/mode/javascript/javascript.js
+
 
