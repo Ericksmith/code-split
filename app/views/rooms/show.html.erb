@@ -38,9 +38,13 @@
                     } else if (data.action == "change_user"){
                         typist = data.user;
                         if(userName == data.user){
+                            let msg = "<p class='chatMessage text-info'>" + data.user + " is now allowed to type in the editor</p>"
+                            $(".chatBox").prepend(msg)
                             myCodeMirror.setOption("readOnly", false)
                             $("#" + data.user + "").prop("checked", true);
                         } else {
+                            let msg = "<p class='chatMessage text-info'>" + data.user + " is now allowed to type in the editor</p>"
+                            $(".chatBox").prepend(msg)
                             myCodeMirror.setOption("readOnly", "nocursor" )
                             $("#" + data.user + "").prop("checked", true);
                         }
@@ -82,7 +86,9 @@
                 }
             });
             $('.users').on("click", 'input:radio', (function(){
-                App.room.change_user($(this).attr('value'))
+                if(typist != $(this).attr('value')){
+                    App.room.change_user($(this).attr('value'))
+                }
             }));
             $("#chatMessage").keypress(function(e){
                 if(e.which == 13){
@@ -97,7 +103,7 @@
             var myCodeMirror = CodeMirror(document.getElementById("codeMirror"), {
                 value: $('#startingCode').val(),
                 lineNumbers: true,
-                theme: "ambiance",
+                theme: "cobalt",
                 mode:  "javascript",
                 readOnly: "nocursor"
             });
@@ -109,12 +115,12 @@
 </script>
 <script src="/assets/codemirror/lib/codemirror.js"></script>
 <link rel="stylesheet" href="/assets/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="/assets/codemirror/theme/ambiance.css">
+<link rel="stylesheet" href="/assets/codemirror/theme/cobalt.css">
 <script src="/assets/codemirror/mode/javascript/javascript.js"></script>
 <div class="row">
     <div class="col-6">
         <h1><%= @room.title %></h1>
-        <p>Created by <%= @room.user.name %></p>
+        <p>Instructor: <%= @room.user.name %></p>
     </div>
     <div class="col-2">
         <h4 class="mt-5">Users<a href="#" data-toggle="tooltip" title="Hooray!"></a></h4>
@@ -133,7 +139,7 @@
     </div>
     <div class="col-2 users">
     </div>
-    <div class="col-4">
+    <div class="col-4 chatArea">
         <div class="chatBox">
         </div>
         <form action="">
