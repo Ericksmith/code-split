@@ -6,6 +6,8 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.joins(:user).find(params[:id])
+    @language = "/assets/codemirror/mode/" + @room.language + "/" + @room.language + ".js"
+    puts @language
     render :show
   end
 
@@ -33,6 +35,6 @@ class RoomsController < ApplicationController
 
   private
   def room_params
-    params.require(:room).permit(:title)
+    params.require(:room).permit(:title, :language)
   end
 end

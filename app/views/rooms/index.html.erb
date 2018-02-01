@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
           <label for="language">Language</label>
-          <select class="form-control" name="language" id="language">
+          <select class="form-control" name="room[language]" id="room[language]">
             <option value="javascript">Javascript</option>
             <option value="python">Python</option>
             <option value="ruby">Ruby</option>
@@ -38,7 +38,7 @@
                     <tr>
                         <td scope="row"><%= room.title %></td>
                         <td><%= room.user.name %></td>
-                        <td>ADD LANG</td>
+                        <td><%= room.language %></td>
                         <td><%= room.created_at.strftime("%b %d, %Y") %></td>
                         <td>
                             <a name="join" id="join" class="btn btn-success" href="/rooms/<%= room.id %>" role="button">Join</a>

@@ -1,7 +1,8 @@
 <script src="/assets/codemirror/lib/codemirror.js"></script>
 <link rel="stylesheet" href="/assets/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="/assets/codemirror/theme/cobalt.css">
-<script src="/assets/codemirror/mode/javascript/javascript.js"></script>
+
+<script src="<%= @language %>"></script>
 <script type="text/javascript" src="/javascript/code_room.js"></script>
 <div class="row">
     <div class="col-6">
@@ -22,7 +23,7 @@
         <input type="hidden" name="startingCode" id="startingCode" value="<%= @room.code %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
-        <input type="hidden" name="language" id="language" value="javascript">
+        <input type="hidden" name="language" id="language" value="<%= @room.language %>">
     </div>
     <div class="col-2 users">
     </div>
