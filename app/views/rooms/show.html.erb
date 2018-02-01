@@ -1,122 +1,8 @@
-
-<script>
-        $(document).ready(function (){
-            var saving = false;
-            var typist = 'null';
-            const roomNum = $('#roomId').val();
-            const userName = $("#user_name").val();
-            const instructor = $("#instructor").val();
-            App.room = App.cable.subscriptions.create({
-                channel: "RoomsChannel",
-                room: roomNum
-            },   {
-                connected: function() {
-                    return this.perform('new_user', {name: userName})
-                },
-                disconnected: function() {
-                    return this.perform('user_left', {name: userName})
-                }, 
-                received(data) {
-                    if(data.action == "send_code"){
-                        if(userName != typist){
-                            myCodeMirror.setValue(data.code)
-                        }
-                    } else if (data.action == "new_user") {
-                        if(userName == instructor ){
-                            let radioButtons = ""
-                            for(var i = 0; i < data.all_users.length; i++){
-                                radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
-                            }
-                            $('.users').html(radioButtons)
-                    } else {
-                        let radioButtons = ""
-                        for(var i = 0; i < data.all_users.length; i++){
-                            radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input disabled type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
-                        }
-                        $('.users').html(radioButtons)
-                    }
-                    } else if (data.action == "change_user"){
-                        typist = data.user;
-                        if(userName == data.user){
-                            let msg = "<p class='chatMessage text-info'>" + data.user + " is now allowed to type in the editor</p>"
-                            $(".chatBox").prepend(msg)
-                            myCodeMirror.setOption("readOnly", false)
-                            $("#" + data.user + "").prop("checked", true);
-                        } else {
-                            let msg = "<p class='chatMessage text-info'>" + data.user + " is now allowed to type in the editor</p>"
-                            $(".chatBox").prepend(msg)
-                            myCodeMirror.setOption("readOnly", "nocursor" )
-                            $("#" + data.user + "").prop("checked", true);
-                        }
-                    } else if (data.action == 'user_left'){
-                        console.log('leaver');
-                    } else if (data.action == "chat_message"){
-                        let msg = "<p class='chatMessage'>" + data.user + ": " + data.msg + "</p>"
-                        $(".chatBox").prepend(msg)
-                    }
-                },
-        
-                send_code: function(text) {
-                    if(!saving){
-                        saving = true
-                        chatObj = this;
-                        setTimeout(this.update_code, 5000)
-                    }
-                    return this.perform('send_code', {code: text})
-                },
-        
-                update_code: function() {
-                    let text = myCodeMirror.getValue();
-                    saving = false
-                    return chatObj.perform('update_code', {
-                        code: text,
-                        room_id: roomNum
-                    })
-                },
-                change_user: function(data){
-                    return this.perform('change_user', {
-                        user: data
-                    })
-                },
-                send_message: function(text){
-                    return this.perform("chat_message", {
-                        msg: text,
-                        user: userName
-                    })
-                }
-            });
-            $('.users').on("click", 'input:radio', (function(){
-                if(typist != $(this).attr('value')){
-                    App.room.change_user($(this).attr('value'))
-                }
-            }));
-            $("#chatMessage").keypress(function(e){
-                if(e.which == 13){
-                    e.preventDefault();
-                    let msg = $("#chatMessage").val();
-                    if(msg.length > 0){
-                        App.room.send_message(msg)
-                        $("#chatMessage").val('')
-                    }
-                }
-            });
-            var myCodeMirror = CodeMirror(document.getElementById("codeMirror"), {
-                value: $('#startingCode').val(),
-                lineNumbers: true,
-                theme: "cobalt",
-                mode:  "javascript",
-                readOnly: "nocursor"
-            });
-            myCodeMirror.on("keyup", function(cMirror){
-                App.room.send_code(myCodeMirror.getValue());
-            })
-            $('[data-toggle="tooltip"]').tooltip(); 
-        });
-</script>
 <script src="/assets/codemirror/lib/codemirror.js"></script>
 <link rel="stylesheet" href="/assets/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="/assets/codemirror/theme/cobalt.css">
 <script src="/assets/codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="/javascript/code_room.js"></script>
 <div class="row">
     <div class="col-6">
         <h1><%= @room.title %></h1>
@@ -136,6 +22,7 @@
         <input type="hidden" name="startingCode" id="startingCode" value="<%= @room.code %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
+        <input type="hidden" name="language" id="language" value="javascript">
     </div>
     <div class="col-2 users">
     </div>
