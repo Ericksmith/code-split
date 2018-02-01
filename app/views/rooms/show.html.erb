@@ -3,7 +3,6 @@
         $(document).ready(function (){
             var saving = false;
             var typist = 'null';
-            //var lineCount = 1
             const roomNum = $('#roomId').val();
             const userName = $("#user_name").val();
             const instructor = $("#instructor").val();
@@ -22,7 +21,6 @@
                         if(userName != typist){
                             myCodeMirror.setValue(data.code)
                         }
-                        $('#editor').val(data.code)
                     } else if (data.action == "new_user") {
                         if(userName == instructor ){
                             let radioButtons = ""
@@ -42,11 +40,9 @@
                         if(userName == data.user){
                             myCodeMirror.setOption("readOnly", false)
                             $("#" + data.user + "").prop("checked", true);
-                            $("#editor").removeAttr("disabled")
                         } else {
                             myCodeMirror.setOption("readOnly", "nocursor" )
                             $("#" + data.user + "").prop("checked", true);
-                            $("#editor").prop('disabled', true);
                         }
                     } else if (data.action == 'user_left'){
                         console.log('leaver');
@@ -85,10 +81,6 @@
                     })
                 }
             });
-            $("#editor").keyup(function(e){
-                let text = $('textarea#editor').val();
-                App.room.send_code(text)
-            });
             $('.users').on("click", 'input:radio', (function(){
                 App.room.change_user($(this).attr('value'))
             }));
@@ -110,11 +102,9 @@
                 readOnly: "nocursor"
             });
             myCodeMirror.on("keyup", function(cMirror){
-                console.log('typing');
-                console.log(myCodeMirror.getValue());
                 App.room.send_code(myCodeMirror.getValue());
             })
-            console.log(myCodeMirror);
+            $('[data-toggle="tooltip"]').tooltip(); 
         });
 </script>
 <script src="/assets/codemirror/lib/codemirror.js"></script>
@@ -127,22 +117,15 @@
         <p>Created by <%= @room.user.name %></p>
     </div>
     <div class="col-2">
-        <h4 class="mt-5">Users</h4>
+        <h4 class="mt-5">Users<a href="#" data-toggle="tooltip" title="Hooray!"></a></h4>
     </div>
     <div class="col-4">
         <h3 class="mt-5">Chat</h3>
+        <p><span class="glyphicon glyphicon-info-sign"></span></p>
     </div>
 </div>
 <div class="row">
     <div class='col-6' id="codeMirror">
-        <div id="users">
-        </div>
-        <div id="lineCount">
-        </div>
-        <script>
-
-        </script>
-        <!-- <textarea name="editor" id="editor" cols="30" rows="10"><%= @room.code %></textarea> -->
         <input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
         <input type="hidden" name="startingCode" id="startingCode" value="<%= @room.code %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
