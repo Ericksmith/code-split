@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root :to => 'rooms#index'
-  root to: "rooms#index"
   resources :rooms, only: [:index, :create, :destory, :show, :destroy]
 
 
