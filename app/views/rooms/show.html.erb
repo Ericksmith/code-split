@@ -1,11 +1,12 @@
 
 <script>
         $(document).ready(function (){
-            var saving = false
-            var lineCount = 1
-            const roomNum = $('#roomId').val()
-            const userName = $("#user_name").val()
-            const instructor = $("#instructor").val()
+            var saving = false;
+            var typist = 'null';
+            //var lineCount = 1
+            const roomNum = $('#roomId').val();
+            const userName = $("#user_name").val();
+            const instructor = $("#instructor").val();
             App.room = App.cable.subscriptions.create({
                 channel: "RoomsChannel",
                 room: roomNum
@@ -14,40 +15,37 @@
                     return this.perform('new_user', {name: userName})
                 },
                 disconnected: function() {
-                    console.log('discon', userName);
                     return this.perform('user_left', {name: userName})
                 }, 
                 received(data) {
                     if(data.action == "send_code"){
+                        if(userName != typist){
+                            myCodeMirror.setValue(data.code)
+                        }
                         $('#editor').val(data.code)
-                        myCodeMirror.setValue(data.code)
                     } else if (data.action == "new_user") {
                         if(userName == instructor ){
                             let radioButtons = ""
                             for(var i = 0; i < data.all_users.length; i++){
-                                radioButtons += '<p class="blocked person" id="'+ data.all_users[i] +'"><input type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
+                                radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
                             }
-                        // let radioButton = $('<input type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
-                        // radioButton.appendTo('#users')
                             $('.users').html(radioButtons)
                     } else {
                         let radioButtons = ""
                         for(var i = 0; i < data.all_users.length; i++){
-                            radioButtons += '<p class="blocked person" id="'+ data.all_users[i] +'"><input disabled type="radio" class="person blocked" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'"><label for="'+data.all_users[i] +'">'+data.all_users[i]+'</label></p>'
+                            radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input disabled type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
                         }
-                        console.log(radioButtons);
-                        // let radioButton = $('<input disabled type="radio" class="person" name="typer" id="'+data.name +'" value="'+data.name +'"><label for="'+data.name +'">'+data.name+'</label>')
-                        // radioButton.appendTo('#users')
                         $('.users').html(radioButtons)
                     }
                     } else if (data.action == "change_user"){
+                        typist = data.user;
                         if(userName == data.user){
-                            console.log('permission granted');
-                            $("#" + data.user + ".blocked").toggleClass("active")
+                            myCodeMirror.setOption("readOnly", false)
+                            $("#" + data.user + "").prop("checked", true);
                             $("#editor").removeAttr("disabled")
-                            console.log(myCodeMirror.value, "value");
                         } else {
-                            console.log('Not allowed to type');
+                            myCodeMirror.setOption("readOnly", "nocursor" )
+                            $("#" + data.user + "").prop("checked", true);
                             $("#editor").prop('disabled', true);
                         }
                     } else if (data.action == 'user_left'){
@@ -64,15 +62,11 @@
                         chatObj = this;
                         setTimeout(this.update_code, 5000)
                     }
-                    console.log(text, "send_code text");
                     return this.perform('send_code', {code: text})
                 },
         
                 update_code: function() {
-                    console.log('updating');
-                    //let text = $('textarea#editor').val();
                     let text = myCodeMirror.getValue();
-                    console.log(text, "updating code");
                     saving = false
                     return chatObj.perform('update_code', {
                         code: text,
@@ -94,23 +88,6 @@
             $("#editor").keyup(function(e){
                 let text = $('textarea#editor').val();
                 App.room.send_code(text)
-                // var lines = text.split(/\r|\r\n|\n/);
-                // var count = lines.length;
-                // console.log(count);
-                // console.log(lineCount);
-                // if(count != lineCount){
-                //     if(count > lineCount){
-                //         for(let i = lineCount; count > i; i++){
-                //             $('<p class="monospaced">' + i +'</p>').appendTo("#lineCount")
-                //     }
-                //         lineCount = count
-                //     } else {
-                //         for(let x = lineCount; count < x; x--){
-                //             $("#lineCount p").last().remove()
-                //         }
-                //         lineCount = count
-                //     }
-                // }
             });
             $('.users').on("click", 'input:radio', (function(){
                 App.room.change_user($(this).attr('value'))
@@ -130,6 +107,7 @@
                 lineNumbers: true,
                 theme: "ambiance",
                 mode:  "javascript",
+                readOnly: "nocursor"
             });
             myCodeMirror.on("keyup", function(cMirror){
                 console.log('typing');
@@ -177,10 +155,8 @@
         </div>
         <form action="">
             <div class="form-group">
-              <input type="text" class="form-control" name="chatMessage" id="chatMessage" aria-describedby="helpId" placeholder="">
+              <input type="text" class="form-control" autocomplete="off" name="chatMessage" id="chatMessage" aria-describedby="helpId" placeholder="">
             </div>
         </form>
     </div>
-</div>
-<div class="row">
 </div>
