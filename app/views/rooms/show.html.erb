@@ -64,13 +64,15 @@
                         chatObj = this;
                         setTimeout(this.update_code, 5000)
                     }
+                    console.log(text, "send_code text");
                     return this.perform('send_code', {code: text})
                 },
         
-                update_code: function(text) {
+                update_code: function() {
                     console.log('updating');
-                    let text = $('textarea#editor').val();
-                    console.log(text);
+                    //let text = $('textarea#editor').val();
+                    let text = myCodeMirror.getValue();
+                    console.log(text, "updating code");
                     saving = false
                     return chatObj.perform('update_code', {
                         code: text,
@@ -129,13 +131,12 @@
                 theme: "ambiance",
                 mode:  "javascript",
             });
-            myCodeMirror.on("keypress", function(cMirror){
+            myCodeMirror.on("keyup", function(cMirror){
                 console.log('typing');
                 console.log(myCodeMirror.getValue());
-                App.room.send_code(myCodeMirror.getValue())
+                App.room.send_code(myCodeMirror.getValue());
             })
             console.log(myCodeMirror);
-            myCodeMirror.setValue("YES")
         });
 </script>
 <script src="/assets/codemirror/lib/codemirror.js"></script>
