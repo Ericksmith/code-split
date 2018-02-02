@@ -21,6 +21,7 @@
     <div class='col-6' id="codeMirror">
         <input type="hidden" name="roomId" id="roomId" value="<%= @room.id %>">
         <input type="hidden" name="startingCode" id="startingCode" value="<%= @room.code %>">
+        <input type="hidden" name="startingCode" id="startingTypist" value="<%= @room.typist %>">
         <input type="hidden" name="user_name" id="user_name" value="<%= current_user.name %>">
         <input type="hidden" name="instructor" id="instructor" value="<%= @room.user.name %>">
         <input type="hidden" name="language" id="language" value="<%= @room.language %>">

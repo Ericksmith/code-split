@@ -5,8 +5,6 @@ class RoomsChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
-    puts "USer left!!!"
-    puts "******************************"
     member = Member.find_by(user_id: current_user.id)
     room = member.room_id
     if member.destroy
@@ -14,7 +12,6 @@ class RoomsChannel < ApplicationCable::Channel
       # unless Member.find_by(room_id: room)
       #   room_to_destroy = Room.find(room)
       #   if room_to_destroy.destroy
-      #     puts "room destroyed"
       #   else
       #     flash[:errors] = room_to_destroy.errors.full_messages
       #   end
@@ -25,12 +22,10 @@ class RoomsChannel < ApplicationCable::Channel
   end
 
   def update_code(data)
-    puts "updating code *******************************"
     room = Room.find(data['room_id'])
     if room.update(code: data['code'])
     else
       flash[:errors] = room.errors.full_messages
-      puts flash[:errors]
     end
   end
 
@@ -54,13 +49,17 @@ class RoomsChannel < ApplicationCable::Channel
   end
 
   def user_left(data)
-    puts '********************************'
-    puts "user leaving"
     ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
   end
 
   def change_user(data)
-    ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+    room = Room.find(params[:room])
+    room.typist = data['user']
+    if room.save
+      ActionCable.server.broadcast("chat_rooms_#{params[:room]}_channel", data)
+    else
+      flash[:errors] = room.errors.full_messages 
+    end
   end
 
   def chat_message(data)

@@ -1,6 +1,6 @@
 $(document).ready(function (){
     var saving = false;
-    var typist = 'null';
+    var typist = $("#startingTypist").val();
     const roomNum = $('#roomId').val();
     const userName = $("#user_name").val();
     const instructor = $("#instructor").val();
@@ -24,13 +24,21 @@ $(document).ready(function (){
                 if(userName == instructor ){
                     let radioButtons = ""
                     for(var i = 0; i < data.all_users.length; i++){
-                        radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
+                        if(typist == data.all_users[i]){
+                            radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'" checked>'+data.all_users[i]+'</label></div>'
+                        } else {
+                            radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
+                        }
                     }
                     $('.users').html(radioButtons)
             } else {
                 let radioButtons = ""
                 for(var i = 0; i < data.all_users.length; i++){
-                    radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input disabled type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
+                    if(typist == data.all_users[i]){
+                        radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input disabled type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'" checked>'+data.all_users[i]+'</label></div>'
+                    } else {
+                        radioButtons += '<div class="form-check" id=""><label class="form-check-label" for="'+data.all_users[i] +'"><input disabled type="radio" class="form-check-input" name="typer" id="'+data.all_users[i] +'" value="'+data.all_users[i]+'">'+data.all_users[i]+'</label></div>'
+                    }
                 }
                 $('.users').html(radioButtons)
             }
@@ -48,7 +56,6 @@ $(document).ready(function (){
                     $("#" + data.user + "").prop("checked", true);
                 }
             } else if (data.action == 'user_left'){
-                console.log('leaver');
             } else if (data.action == "chat_message"){
                 let msg = "<p class='chatMessage'>" + data.user + ": " + data.msg + "</p>"
                 $(".chatBox").prepend(msg)
@@ -99,16 +106,28 @@ $(document).ready(function (){
             }
         }
     });
-    console.log(language);
-    var myCodeMirror = CodeMirror(document.getElementById("codeMirror"), {
-        value: $('#startingCode').val(),
-        lineNumbers: true,
-        theme: "cobalt",
-        mode:  language,
-        readOnly: "nocursor"
-    });
-    myCodeMirror.on("keyup", function(cMirror){
-        App.room.send_code(myCodeMirror.getValue());
-    })
+    if(typist == userName){
+        var myCodeMirror = CodeMirror(document.getElementById("codeMirror"), {
+            value: $('#startingCode').val(),
+            lineNumbers: true,
+            theme: "cobalt",
+            mode:  language,
+            readOnly: false
+        });
+        myCodeMirror.on("keyup", function(cMirror){
+            App.room.send_code(myCodeMirror.getValue());
+        })
+    } else {
+        var myCodeMirror = CodeMirror(document.getElementById("codeMirror"), {
+            value: $('#startingCode').val(),
+            lineNumbers: true,
+            theme: "cobalt",
+            mode:  language,
+            readOnly: "nocursor"
+        });
+        myCodeMirror.on("keyup", function(cMirror){
+            App.room.send_code(myCodeMirror.getValue());
+        })
+    }
     $('[data-toggle="tooltip"]').tooltip(); 
 });
