@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20180202000111) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "members", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
+    t.bigint "user_id"
+    t.bigint "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_members_on_room_id"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20180202000111) do
 
   create_table "rooms", force: :cascade do |t|
     t.string "title"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "code"
@@ -51,12 +54,7 @@ ActiveRecord::Schema.define(version: 20180202000111) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "vrooms", force: :cascade do |t|
-    t.string "name"
-    t.string "sessionId"
-    t.boolean "public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+  add_foreign_key "members", "rooms"
+  add_foreign_key "members", "users"
+  add_foreign_key "rooms", "users"
 end

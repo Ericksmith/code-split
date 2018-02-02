@@ -34,6 +34,10 @@ gem 'bootstrap', '~> 4.0.0.beta2.1'
 
 gem 'devise'
 
+# postgres
+gem 'pg'
+
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -54,13 +58,9 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'hirb'
   gem "opentok"
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
 end
 
 group :production do
-  gem 'pg', '0.15.1'
-  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
