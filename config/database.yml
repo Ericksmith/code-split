@@ -81,5 +81,3 @@ test:
 production:
   <<: *default
   database: code_s_production
-  username: code_s
-  password: <%= ENV['PGTEST_DATABASE_PASSWORD'] %>
