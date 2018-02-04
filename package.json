@@ -1,7 +1,23 @@
+
 {
   "name": "code_split",
   "private": true,
   "dependencies": {
     "codemirror": "^5.34.0"
+  },  
+  "description": "An online white board program",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "test"
+  ],
+  "engines": {
+    "node": "4.1.1"
   }
 }
