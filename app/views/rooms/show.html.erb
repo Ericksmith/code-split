@@ -1,8 +1,11 @@
-<script src="/assets/codemirror/lib/codemirror.js"></script>
-<link rel="stylesheet" href="/assets/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="/assets/codemirror/theme/cobalt.css">
 
-<script src="<%= @language %>"></script>
+<%= javascript_include_tag "codemirror/lib/codemirror" %>
+<%= javascript_include_tag "#{@language}" %>
+
+<%= stylesheet_link_tag "codemirror/lib/codemirror", media: "all" %>
+<%= stylesheet_link_tag "codemirror/theme/cobalt", media: "all" %>
+
+
 <script type="text/javascript" src="/javascript/code_room.js"></script>
 <div class="row">
     <div class="col-6">

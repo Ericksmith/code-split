@@ -19,3 +19,4 @@
 //= require codemirror/mode/javascript/javascript.js
 
 
+// require_tree ../../../node_modules
