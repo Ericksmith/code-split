@@ -47,8 +47,10 @@
                         <td><%= room.created_at.strftime("%b %d, %Y") %></td>
                         <td>
                             <a name="join" id="join" class="btn btn-success" href="/rooms/<%= room.id %>" role="button">Join</a>
-                            <% if room.user.name == current_user.name %> 
-                            <a name="delete" id="delete" class="btn btn-danger" data-method="delete" href="/rooms/<%= room.id %>" role="button">Delete</a>
+                            <% if user_signed_in? %>
+                                <% if room.user.name == current_user.name %> 
+                                    <a name="delete" id="delete" class="btn btn-danger" data-method="delete" href="/rooms/<%= room.id %>" role="button">Delete</a>
+                                <% end %>
                             <% end %>
                         </td>
                     </tr>

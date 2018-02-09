@@ -22,7 +22,7 @@
           <div class="collapse navbar-collapse align-items-end" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle pull-right" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= current_user.name %></a>
+                <a class="nav-link dropdown-toggle text-white pull-right" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= current_user.name %></a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
                   <a class="dropdown-item" href="/users/edit">Edit Profile</a>
                   <a class="dropdown-item" href="/users/password/edit">Change Password</a>
@@ -35,6 +35,10 @@
       <%else%>
       <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #002A43">
         <a class="navbar-brand" href="/" id="title">Code/Split</a>
+        <div class="align-items-end">
+          <a name="" id="" class="btn btn-info" href="/users/sign_in" role="button">Login</a>
+          <a name="" id="" class="btn btn-info" href="/users/sign_up" role="button">Register</a>
+        </div>
       </nav>
       <%end%>
       <%= yield %>
