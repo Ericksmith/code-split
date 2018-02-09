@@ -2,7 +2,6 @@ class Room < ApplicationRecord
   belongs_to :user
   has_many :members, :dependent => :delete_all
   has_many :users, through: :members
-  # after_update_commit { CodeBroadcastJob.perform_later(self) }
 
   def timestamp
     created_at.strftime('%H:%M:%S %d %B %Y')
