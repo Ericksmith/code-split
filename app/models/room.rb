@@ -1,6 +1,6 @@
 class Room < ApplicationRecord
   belongs_to :user
-  has_many :members
+  has_many :members, :dependent => :delete_all
   has_many :users, through: :members
   # after_update_commit { CodeBroadcastJob.perform_later(self) }
 
