@@ -1,6 +1,15 @@
 
 <br>
 <div class="row">
+    <div class="col-3">
+        <h2>How it works</h2>
+        <p>Code/Split allows you to create or join coding rooms where you can learn and collaborate with others. The code editor will mirror the active users code to others in the room so you can perform remote paired coding.</p>
+    </div> <!-- col end -->
+    <div class="col-9">
+        <%= image_tag "demo.gif",  :class => "demo_gif" %>
+    </div> <!-- col end -->
+</div> <!-- row end -->
+<div class="row">
     <div class="col-4">
       <legend>Create a room</legend>
       <form action="/rooms" method="post">
